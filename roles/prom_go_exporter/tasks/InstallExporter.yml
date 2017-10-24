@@ -1,0 +1,34 @@
+- name: Download go_exp from url to local Control Machine
+  delegate_to: 127.0.0.1
+  get_url:
+    url: "{{ go_exp_url }}"
+    dest: "{{playbook_dir}}/files/goexp.tar.gz"
+    validate_certs: no
+    use_proxy: yes
+    force: no
+
+##Prepare Offline Installation on Remote Nodes (Fabian)
+- name: Copy Go ES Exporter Installation-Files to Remote-Node
+  copy:
+    src:  "{{playbook_dir}}/files/goexp.tar.gz"
+    dest: "/tmp/goexp.tar.gz"
+
+## Unzip Install Files
+#- name: Unzip go_exp Install Files
+#  command: tar -C /monitoring -xzf /tmp/goexp.tar.gz
+
+- name: Unzip Prom Go ES Exporter Install Files
+  unarchive:
+    src: /tmp/goexp.tar.gz
+    dest: /monitoring
+    remote_src: yes
+##
+
+- name: Get Name of ES Export Folder from Archive
+  shell: tar tf /tmp/goexp.tar.gz | head -1 | sed -e 's/\/.*//'
+  changed_when: false
+  register: tar_name
+  
+#Copy the systemd specific file if systemd is installed
+- name: Copy Systemd File for Instance
+  template: src=elasticsearch_exporter.j2 dest={{sysd_script}} mode=0644 force=yes

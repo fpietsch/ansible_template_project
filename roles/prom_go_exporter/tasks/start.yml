@@ -1,0 +1,12 @@
+# Unzip Install Files
+- name: Reload Daemon
+  command: systemctl daemon-reload
+  changed_when: false
+
+# Unzip Install Files
+- name: Reload Daemon
+  command: systemctl enable elasticsearch_exporter.service
+  changed_when: false
+
+- name: Start Service
+  service: name=elasticsearch_exporter state=started

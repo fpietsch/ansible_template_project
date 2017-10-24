@@ -1,0 +1,2 @@
+stage: "dev"
+clustername: "Elasticsearch_Cluster"

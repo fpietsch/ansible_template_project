@@ -1,0 +1,11 @@
+
+[Unit]
+Description=Stats_ex
+After=network.target
+
+[Service]
+ExecStart=/monitoring/{{tar_name.stdout}}/elasticsearch_exporter -es.uri=http://{{ansible_default_ipv4.address}}:9200
+Type=default
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,2 @@
+# file: Cross_Env_Vars
+proxyServer: "http://user:pass@ip:port"

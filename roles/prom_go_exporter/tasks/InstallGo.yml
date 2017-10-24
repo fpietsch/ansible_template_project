@@ -1,0 +1,39 @@
+- name: Download Go from url to local Control Machine
+  delegate_to: 127.0.0.1
+  get_url:
+    url: "{{ go_url }}"
+    dest: "{{playbook_dir}}/files/golang.tar.gz"
+    validate_certs: no
+    use_proxy: yes
+    force: no
+
+##Prepare Offline Installation on Remote Nodes (Fabian)
+- name: Copy Go Installation-Files to Remote-Node
+  copy:
+    src:  "{{playbook_dir}}/files/golang.tar.gz"
+    dest: "/tmp/golang.tar.gz"
+
+## Unzip Install Files
+#- name: Unzip Go Install Files
+#  command: tar -C /usr/local -xzf /tmp/golang.tar.gz
+
+- name: Unzip Go Install Files
+  unarchive:
+    src: /tmp/golang.tar.gz
+    dest: /usr/local/
+    remote_src: yes
+
+## Unzip Install Files
+#- name: Unzip Prometheus Install Files
+#  command: tar -C /usr/local/golang/ -xzf /tmp/golang.tar.gz
+
+- name: Set Go Path via export Command
+  shell: export PATH=$PATH:/usr/local/go/bin
+  changed_when: false
+
+- name: Set Go in /etc/profile
+  lineinfile:
+    path: /etc/profile
+    line: 'export PATH=$PATH:/usr/local/go/bin'
+
+##

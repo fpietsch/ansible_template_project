@@ -1,0 +1,13 @@
+---
+#Autor of Ansible Projekt inkl. Roles: Fabian Pietsch (07.07.2017) v0.1
+
+- hosts: ES_Nodes
+  serial: 1
+  roles:
+    - {
+      environment: "{{proxy_env}}",
+      role: prom_go_exporter }
+  vars:
+    proxy_env:
+      http_proxy: "{{proxyServer}}"
+      https_proxy: "{{proxyServer}}"

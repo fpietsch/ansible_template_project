@@ -1,0 +1,27 @@
+# 
+# Fabian P., v0.
+#
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+#
+
+#1.--Host IP-Table-------------------------------------------------------------
+
+[ES_Nodes]
+p-s01 	ansible_ssh_common_args="-o PubkeyAuthentication=no" ansible_connection=ssh ansible_host=1.1.1.1 ansible_become=true ansible_user=fpietsch ansible_become_method=su ansible_become_exe="sudo su -"
+h-s01 		ansible_ssh_common_args="-o PubkeyAuthentication=no" ansible_connection=ssh ansible_host=1.1.1.2 ansible_become=true ansible_user=fpietsch ansible_become_method=su ansible_become_exe="sudo su -"
+h-s02 		ansible_ssh_common_args="-o PubkeyAuthentication=no" ansible_connection=ssh ansible_host=1.1.1.3 ansible_become=true ansible_user=fpietsch ansible_become_method=su ansible_become_exe="sudo su -"
+z-s01 		ansible_ssh_common_args="-o PubkeyAuthentication=no" ansible_connection=ssh ansible_host=1.1.1.4 ansible_become=true ansible_user=fpietsch ansible_become_method=su ansible_become_exe="sudo su -"
+
+#2.--Host Groups---------------------------------------------------------------
+
+
+
+#O.--Inventory Variables-------------------------------------------------------
+#Group_vars/all enthält zusätzliche Variablen für alle Hosts im aktuellen Staging
+
+		[all:vars]
+		#........
